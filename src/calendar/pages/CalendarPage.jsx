@@ -5,6 +5,7 @@ import { localizer, getMessagesES } from '../../helpers'
 
 // components
 import { Navbar, CalendarEvent } from "../"
+import { useState } from 'react'
 
 const events = [
   {
@@ -21,9 +22,7 @@ const events = [
 ]
 
 export const CalendarPage = () => {
-
   const eventStyleGetter = (event, start, end, isSelected) => {
-
     const style = {
       backgroundColor: '#347CF7',
       borderRadius: '20px',
@@ -33,6 +32,18 @@ export const CalendarPage = () => {
     return {
       style
     }
+  }
+
+  const [lastView, setLastView] = useState(localStorage.getItem("lastView") || 'month')
+
+  const onDoubleClick = ( event ) => {
+    console.log({ doubleClick: event })
+  }
+  const onSelect = ( event ) => {
+    console.log({ select: event })
+  }
+  const onViewChanged = ( event ) => {
+    localStorage.setItem("lastView", event)
   }
 
   return (
@@ -50,6 +61,10 @@ export const CalendarPage = () => {
         }}
         startAccessor="start"
         endAccessor="end"
+        onDoubleClickEvent={ onDoubleClick }
+        onSelectEvent={ onSelect }
+        defaultView={ lastView }
+        onView={ onViewChanged }
         style={{ height: 'calc( 100vh - 80px )' }}
       />
     </>
