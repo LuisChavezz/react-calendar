@@ -4,7 +4,7 @@ import { addHours } from 'date-fns'
 import { localizer, getMessagesES } from '../../helpers'
 
 // components
-import { Navbar } from "../"
+import { Navbar, CalendarEvent } from "../"
 
 const events = [
   {
@@ -23,7 +23,6 @@ const events = [
 export const CalendarPage = () => {
 
   const eventStyleGetter = (event, start, end, isSelected) => {
-    console.log({event, start, end, isSelected})
 
     const style = {
       backgroundColor: '#347CF7',
@@ -46,6 +45,9 @@ export const CalendarPage = () => {
         events={ events }
         messages={ getMessagesES() }
         eventPropGetter={ eventStyleGetter }
+        components={{
+          event: CalendarEvent
+        }}
         startAccessor="start"
         endAccessor="end"
         style={{ height: 'calc( 100vh - 80px )' }}
