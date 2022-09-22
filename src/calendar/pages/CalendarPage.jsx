@@ -4,7 +4,7 @@ import { addHours } from 'date-fns'
 import { localizer, getMessagesES } from '../../helpers'
 
 // components
-import { Navbar, CalendarEvent } from "../"
+import { Navbar, CalendarEvent, CalendarModal } from "../"
 import { useState } from 'react'
 
 const events = [
@@ -67,6 +67,7 @@ export const CalendarPage = () => {
         onView={ onViewChanged }
         style={{ height: 'calc( 100vh - 80px )' }}
       />
+      <CalendarModal />
     </>
   )
 }
