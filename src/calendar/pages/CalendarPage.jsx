@@ -34,7 +34,7 @@ export const CalendarPage = () => {
     }
   }
 
-  const [lastView, setLastView] = useState(localStorage.getItem("lastView") || 'month')
+  const [lastView, setLastView] = useState( localStorage.getItem("lastView") || 'month' )
 
   const onDoubleClick = ( event ) => {
     console.log({ doubleClick: event })
