@@ -24,7 +24,7 @@ const events = [
 export const CalendarPage = () => {
   const eventStyleGetter = (event, start, end, isSelected) => {
     const style = {
-      backgroundColor: '#347CF7',
+      backgroundColor: '#d10610',
       borderRadius: '20px',
       opacity: 0.8,
       color: '#fff'
