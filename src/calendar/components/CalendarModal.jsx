@@ -4,6 +4,10 @@ import Modal from "react-modal"
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import es from 'date-fns/locale/es';
+import { useForm } from "../../hooks";
+import Swal from "sweetalert2";
+import 'sweetalert2/dist/sweetalert2.min.css'
+import { useMemo } from "react";
 
 
 const modalStyles = {
@@ -20,50 +24,44 @@ Modal.setAppElement('#root');
 
 export const CalendarModal = () => {
 
-  const [isOpen, setIsOpen] = useState( true )
+  const [isOpen, setIsOpen] = useState( true )  
+  const onCloseModal = () => {
+    console.log('closing modal...')
+    setIsOpen( false )
+  }
+  const [formSubmitted, setFormSubmited] = useState(false)
 
-  const [formValues, setFormValues] = useState({
+  // useForm
+  const [ values, handleInputChange, handleDateChange ] = useForm({ // Initial State
     title: 'Fernando',
     notes: 'Herrera',
     start: new Date(),
     end: addHours( new Date(), 4 ),
-  })
+  });
 
-  const onDateChange = ( event, changing ) => {
-    setFormValues({
-      ...formValues,
-      [changing]: event
-    })
-  }
+  const titleClass = useMemo(() => {
+    if ( !formSubmitted ) return '';
+    return ( values.title.length > 0 )
+      ? 'is-valid'
+      : 'is-invalid'
+  }, [ values, formSubmitted ])
 
-  const onInputChange = ({ target }) => {
-    setFormValues({
-      ...formValues,
-      [ target.name ]: target.value,
-    })
-  }
-
+  // onSubmit
   const handleSubmit = (e) => {
     e.preventDefault();
+    setFormSubmited( true )
 
-    const difference = differenceInSeconds( formValues.end, formValues.start )
-
+    const difference = differenceInSeconds( values.end, values.start )
     if ( isNaN(difference) || difference <= 0 ) {
-      console.log('Error en fechas')
+      Swal.fire('Fechas incorectas', 'Favor de revisar las fechas ingresadas', 'error')
       return
     }
 
-    if ( formValues.title.length <= 0 ) {
+    if ( values.title.length <= 0 ) {
       console.log('Falta un título')
       return
     }
-
-    console.log( formValues )
-  }
-
-  const onCloseModal = () => {
-    console.log('closing modal...')
-    setIsOpen( false )
+    console.log( values )
   }
 
   return (
@@ -81,8 +79,8 @@ export const CalendarModal = () => {
         <div className="form-group mb-2">
             <label>Fecha y hora inicio</label>
             <DatePicker 
-              selected={ formValues.start }
-              onChange={ (e) => onDateChange( e, 'start' ) }
+              selected={ values.start }
+              onChange={ (e) => handleDateChange( e, 'start' ) }
               className="form-control"
               dateFormat="Pp"
               showTimeSelect
@@ -94,9 +92,9 @@ export const CalendarModal = () => {
         <div className="form-group mb-2">
             <label>Fecha y hora fin</label>
             <DatePicker 
-              minDate={ formValues.start }
-              selected={ formValues.end }
-              onChange={ (e) => onDateChange( e, 'start' ) }
+              minDate={ values.start }
+              selected={ values.end }
+              onChange={ (e) => handleDateChange( e, 'end' ) }
               className="form-control"
               dateFormat="Pp"
               showTimeSelect
@@ -110,12 +108,12 @@ export const CalendarModal = () => {
             <label>Titulo y notas</label>
             <input 
                 type="text" 
-                className="form-control"
+                className={ `form-control ${titleClass}` }
                 placeholder="Título del evento"
                 name="title"
                 autoComplete="off"
-                value={ formValues.title }
-                onChange={ onInputChange }
+                value={ values.title }
+                onChange={ handleInputChange }
             />
             <small id="emailHelp" className="form-text text-muted">Una descripción corta</small>
         </div>
@@ -123,12 +121,12 @@ export const CalendarModal = () => {
         <div className="form-group mb-2">
             <textarea 
                 type="text" 
-                className="form-control"
+                className="form-control "
                 placeholder="Notas"
                 rows="5"
                 name="notes"
-                value={ formValues.notes }
-                onChange={ onInputChange }
+                value={ values.notes }
+                onChange={ handleInputChange }
             ></textarea>
             <small id="emailHelp" className="form-text text-muted">Información adicional</small>
         </div>
