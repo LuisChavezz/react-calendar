@@ -1,14 +1,16 @@
 import { Calendar } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
+import { useState } from 'react'
 import { addHours } from 'date-fns'
 import { localizer, getMessagesES } from '../../helpers'
+import { useUiStore, useCalendarStore } from '../../hooks'
 
 // components
 import { Navbar, CalendarEvent, CalendarModal } from "../"
-import { useState } from 'react'
-import { useUiStore } from '../../hooks'
 
-const events = [
+
+
+const eventos = [
   {
     title: 'Cumpleaños de mi pana',
     notes: 'Comprar cartón de chelas',
@@ -36,6 +38,7 @@ export const CalendarPage = () => {
   }
 
   const { openDateModal } = useUiStore();
+  const { events } = useCalendarStore();
   const [lastView, setLastView] = useState( localStorage.getItem("lastView") || 'month' )
 
   const onDoubleClick = ( event ) => {
