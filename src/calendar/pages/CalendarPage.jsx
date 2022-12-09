@@ -1,28 +1,12 @@
 import { Calendar } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { useState } from 'react'
-import { addHours } from 'date-fns'
 import { localizer, getMessagesES } from '../../helpers'
 import { useUiStore, useCalendarStore } from '../../hooks'
 
 // components
-import { Navbar, CalendarEvent, CalendarModal } from "../"
+import { Navbar, CalendarEvent, CalendarModal, FabAddNew } from "../"
 
-
-
-const eventos = [
-  {
-    title: 'Cumpleaños de mi pana',
-    notes: 'Comprar cartón de chelas',
-    start: new Date(),
-    end: addHours( new Date(), 2 ),
-    bgColor: '#fafafa',
-    user: {
-      id: '123',
-      name: 'Alberto'
-    }
-  }
-]
 
 export const CalendarPage = () => {
   const eventStyleGetter = (event, start, end, isSelected) => {
@@ -73,6 +57,7 @@ export const CalendarPage = () => {
         style={{ height: 'calc( 100vh - 80px )' }}
       />
       <CalendarModal />
+      <FabAddNew />
     </>
   )
 }
