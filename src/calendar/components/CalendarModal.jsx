@@ -32,7 +32,7 @@ export const CalendarModal = () => {
     closeDateModal()
     
   }
-  const { activeEvent } = useCalendarStore();
+  const { activeEvent, startSavingEvent } = useCalendarStore();
   const [formSubmitted, setFormSubmited] = useState(false)
 
   // useForm
@@ -58,9 +58,9 @@ export const CalendarModal = () => {
   
 
   // onSubmit
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    setFormSubmited( true )
+    setFormSubmited( true ) // si el submit se ejecutó
 
     const difference = differenceInSeconds( values.end, values.start )
     if ( isNaN(difference) || difference <= 0 ) {
@@ -72,7 +72,10 @@ export const CalendarModal = () => {
       console.log('Falta un título')
       return
     }
-    console.log( values )
+    // TODO: 
+    await startSavingEvent( values )
+    closeDateModal();
+    setFormSubmited(false)
   }
 
   return (
