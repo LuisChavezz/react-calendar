@@ -5,7 +5,7 @@ import { localizer, getMessagesES } from '../../helpers'
 import { useUiStore, useCalendarStore } from '../../hooks'
 
 // components
-import { Navbar, CalendarEvent, CalendarModal, FabAddNew } from "../"
+import { Navbar, CalendarEvent, CalendarModal, FabAddNew, FabDelete } from "../"
 
 
 export const CalendarPage = () => {
@@ -58,6 +58,7 @@ export const CalendarPage = () => {
       />
       <CalendarModal />
       <FabAddNew />
+      <FabDelete />
     </>
   )
 }
