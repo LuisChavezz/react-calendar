@@ -7,9 +7,7 @@ import { getEnvVariables } from "../helpers";
 
 export const AppRouter = () => {
 
-  const authStatus = true;
-
-  console.log(getEnvVariables());
+  const authStatus = false;
 
   return (
     <Routes>
