@@ -1,5 +1,5 @@
 
-import { useFormFernando } from '../../hooks';
+import { useAuthStore, useFormFernando } from '../../hooks';
 import './LoginPage.css';
 
 const loginFormField = {
@@ -15,12 +15,14 @@ const registerFormField = {
 
 export const LoginPage = () => {
 
+  const { startLogin } = useAuthStore()
+
   const { loginEmail, loginPassword, onInputChange:onLoginInputChange } = useFormFernando( loginFormField );
   const { registerName, registerEmail, registerPassword, registerPassword2, onInputChange:onRegisterInputChange } = useFormFernando( registerFormField );
 
   const loginSubmit = ( event ) => {
     event.preventDefault();
-    console.log({ loginEmail, loginPassword })
+    startLogin({ email: loginEmail, password: loginPassword })
   }
   const registerSubmit = ( event ) => {
     event.preventDefault();

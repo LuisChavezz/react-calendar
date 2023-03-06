@@ -1,4 +1,5 @@
 export * from './useForm'
+export * from './useAuthStore'
 export * from './useFormFernando'
 export * from './useUiStore'
 export * from './useCalendarStore'
