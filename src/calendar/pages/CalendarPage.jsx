@@ -1,6 +1,6 @@
 import { Calendar } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { localizer, getMessagesES } from '../../helpers'
 import { useUiStore, useCalendarStore } from '../../hooks'
 
@@ -22,8 +22,8 @@ export const CalendarPage = () => {
   }
 
   const { openDateModal } = useUiStore();
-  const { events, setActiveEvent } = useCalendarStore();
-  const [lastView, setLastView] = useState( localStorage.getItem("lastView") || 'month' )
+  const { events, setActiveEvent, startLoadingEvents } = useCalendarStore();
+  const [lastView] = useState( localStorage.getItem("lastView") || 'month' )
 
   const onDoubleClick = ( event ) => {
     openDateModal()
@@ -34,6 +34,11 @@ export const CalendarPage = () => {
   const onViewChanged = ( event ) => {
     localStorage.setItem("lastView", event)
   }
+
+  useEffect(() => {
+    startLoadingEvents()
+  }, [])
+  
 
   return (
     <>
