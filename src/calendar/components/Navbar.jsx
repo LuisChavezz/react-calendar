@@ -12,9 +12,12 @@ export const Navbar = () => {
         <span>{ user.name }</span>
       </span>
 
-      <button className="btn btn-outline-danger">
+      <button 
+        onClick={ startLogout }
+        className="btn btn-outline-danger"
+      >
         <i className="fas fa-sign-out-alt mr-2"></i>
-        <span onClick={ startLogout } >Salir</span>
+        <span>Salir</span>
       </button>
     </div>
   )
